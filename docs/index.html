@@ -1,0 +1,58 @@
+<head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/ascetic.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .title {
+            margin-top: 1%;
+            margin-left: 15%;
+            font-size: 200%;
+        }
+
+        #code {
+            left: 15%;
+            width: 80%;
+            position: absolute;
+            word-wrap: break-word;
+            z-index: -1;
+        }
+
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: rgba(0, 0, 100, 0.02);
+        }
+
+        .hljs-comment {
+            color: blue;
+        }
+
+        .font {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 1.25em;
+        }
+
+        button {
+            position: absolute;
+            background: green;
+            color: white;
+            font-size: 1.25em;
+        }
+    </style>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <div>
+        <button id="button1" style="top: 0; left: 0">Top left button</button>
+        <button id="button2" style="top: 0; right: 0">Top right button</button>
+        <button id="button3" style="bottom: 0; left: 0">Bottom left button</button>
+        <button id="button4" style="bottom: 0; right: 0">Bottom right button</button>
+    </div>
+    <div class="title">Example for <a href="https://github.com/davidfig/tooltip/">github.com/davidfig/tooltip/</a></div>
+    <pre><code class="javascript" id="code"></code></pre>
+</body>

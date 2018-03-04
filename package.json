@@ -1,0 +1,21 @@
+{
+  "name": "yy-tooltip",
+  "version": "1.0.0",
+  "description": "Yet another vanilla javascript tooltip library",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/budo --dir docs docs/code.js:index.js --live",
+    "build": "browserify docs/code.js -o docs/index.js",
+    "docs": "markdown-api README.md index.js",
+    "prepublishOnly": "npm run build && npm run docs"
+  },
+  "author": "David Figatner",
+  "license": "MIT",
+  "devDependencies": {
+    "fork-me-github": "^1.0.3",
+    "highlight.js": "^9.12.0"
+  },
+  "dependencies": {
+    "dom-ease": "^0.7.4"
+  }
+}
