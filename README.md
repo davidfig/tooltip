@@ -30,8 +30,8 @@ https://davidfig.github.io/tooltip/
      * @param {HTMLElement} element
      * @param {string} html
      * @param {object} [options]
-     * @param {object} [options.styles] styles to apply to this tooltip (e.g., backgroundColor: 'red')
-     * @param {number} [options.parent] parent to attach this tooltip div
+     * @param {object} [options.styles] additional styles to apply to tooltip (e.g., backgroundColor: 'red')
+     * @param {number} [options.parent] parent to attach tooltip div
      */
     constructor(element, html, options)
 
@@ -44,39 +44,39 @@ https://davidfig.github.io/tooltip/
 
     /**
      * @type {string}
-     * gets/sets html of tooltip
+     * gets/sets change html of tooltip
      */
     get html()
 
     /**
      * @type {number}
-     * get/set fade in/out duration in milliseconds for all tooltips
+     * get/set fade in/out duration in milliseconds
      */
     static get animationDuration()
 
     /**
      * @type {(string|function)}
-     * get/set ease function (or function name) to use for all tooltip fades
+     * get/set ease function (or function name) to use for tooltip fade
      * defaults to 'easeInOutSine'
      */
     static get animationEase()
 
 /**
  * @type {object}
- * default styles to apply to all tooltip divs
+ * default styles to apply to tooltip div
  */
 Tooltip.styles = {
 
 /**
  * @type {number}
  * @static
- * milliseconds to wait before showing all tooltip
+ * milliseconds to wait before showing tooltip
  */
 Tooltip.wait = 500
 
 /**
  * @type {HTMLElement}
- * element to attach all divs
+ * element to attach div
  */
 Tooltip.parent = document.body
 
