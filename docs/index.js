@@ -94,7 +94,7 @@ class Tooltip
 
         element.addEventListener('mouseenter', (e) => this.mouseenter(e))
         element.addEventListener('mousemove', (e) => this.mousemove(e))
-        element.addEventListener('mouseout', (e) => this.mouseout(e))
+        element.addEventListener('mouseleave', (e) => this.mouseleave(e))
 
         this.parent.appendChild(this.div)
     }
@@ -148,26 +148,8 @@ class Tooltip
 
     position(e)
     {
-        if (e.clientX > window.innerWidth / 2)
-        {
-            this.div.style.left = 'unset'
-            this.div.style.right = window.innerWidth - e.clientX + 'px'
-        }
-        else
-        {
-            this.div.style.right = 'unset'
-            this.div.style.left = e.clientX + 'px'
-        }
-        if (e.clientY < window.innerHeight / 2)
-        {
-            this.div.style.bottom = 'unset'
-            this.div.style.top = e.clientY + 'px'
-        }
-        else
-        {
-            this.div.style.top = 'unset'
-            this.div.style.bottom = window.innerHeight - e.clientY + 'px'
-        }
+        this.div.style.left = e.pageX - (e.pageX > window.innerWidth / 2 ? this.div.offsetWidth : 0) + 'px'
+        this.div.style.top = e.pageY - (e.pageY > window.innerHeight / 2 ? this.div.offsetHeight : 0) + 'px'
     }
 
     mouseenter(e)
@@ -198,7 +180,7 @@ class Tooltip
         }
     }
 
-    mouseout()
+    mouseleave()
     {
         if (this.div && this.showing)
         {
