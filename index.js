@@ -31,19 +31,15 @@ class Tooltip
 
         this.parent = options.parent || Tooltip.parent || document.body
         this.div = document.createElement('div')
-
         for (let style in styles)
         {
             this.div.style[style] = styles[style]
         }
-        this.div.style.display = 'none'
         this.div.innerHTML = html
 
         element.addEventListener('mouseenter', (e) => this.mouseenter(e))
         element.addEventListener('mousemove', (e) => this.mousemove(e))
         element.addEventListener('mouseleave', (e) => this.mouseleave(e))
-
-        this.parent.appendChild(this.div)
     }
 
     /** removes tooltip */
@@ -111,6 +107,7 @@ class Tooltip
             {
                 this.div.style.opacity = 0
                 this.div.style.display = this.display
+                this.parent.appendChild(this.div)
                 Tooltip.ease.remove(this.easing)
                 this.easing = Tooltip.ease.add(this.div, { opacity: 1 }, { wait: Tooltip.wait })
                 this.position(e)
@@ -136,7 +133,7 @@ class Tooltip
             this.easing = Tooltip.ease.add(this.div, { opacity: 0 })
             this.easing.on('complete', () =>
             {
-                this.div.style.display = 'none'
+                this.div.remove()
             })
         }
     }
