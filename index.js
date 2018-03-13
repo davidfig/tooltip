@@ -39,6 +39,7 @@ class Tooltip
 
         element.addEventListener('mouseenter', (e) => this.mouseenter(e))
         element.addEventListener('mousemove', (e) => this.mousemove(e))
+        element.addEventListener('mousedown', (e) => this.mouseleave(e))
         element.addEventListener('mouseleave', (e) => this.mouseleave(e))
     }
 
