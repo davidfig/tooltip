@@ -2,7 +2,7 @@ const Tooltip = require('..')
 
 function test()
 {
-    for (let i = 1; i < 5; i++)
+    for (let i = 1; i < 6; i++)
     {
         const button = document.getElementById('button' + i)
         switch (i)
@@ -22,6 +22,10 @@ function test()
                                 borderRadius: '0.25em'
                             }
                     })
+                break
+
+            case 5:
+                new Tooltip(button, '<p>This is a tooltip that is very long and has multiple lines.</p><p>This is testing whether it properly wraps the text so it does not fall off the screen. I have to keep typing but I am running out of things to say.</p><p>I guess I will leave it like this.</p>')
                 break
 
             default:

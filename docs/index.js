@@ -3,7 +3,7 @@ const Tooltip = require('..')
 
 function test()
 {
-    for (let i = 1; i < 5; i++)
+    for (let i = 1; i < 6; i++)
     {
         const button = document.getElementById('button' + i)
         switch (i)
@@ -23,6 +23,10 @@ function test()
                                 borderRadius: '0.25em'
                             }
                     })
+                break
+
+            case 5:
+                new Tooltip(button, '<p>This is a tooltip that is very long and has multiple lines.</p><p>This is testing whether it properly wraps the text so it does not fall off the screen. I have to keep typing but I am running out of things to say.</p><p>I guess I will leave it like this.</p>')
                 break
 
             default:
@@ -159,8 +163,16 @@ class Tooltip
 
     position(e)
     {
+        this.div.maxWidth = 'none'
         this.div.style.left = e.pageX - (e.pageX > window.innerWidth / 2 ? this.div.offsetWidth : 0) + 'px'
         this.div.style.top = e.pageY - (e.pageY > window.innerHeight / 2 ? this.div.offsetHeight : 0) + 'px'
+        if (this.div.offsetLeft < 0)
+        {
+            const width = this.div.offsetWidth
+            const left = this.div.offsetLeft
+            this.div.style.maxWidth = width + left + 'px'
+            this.div.style.left = 0
+        }
     }
 
     mouseenter(e)
