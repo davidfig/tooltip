@@ -1,9 +1,9 @@
-const forkMe = require('..')
-
+import forkMe from '../dist/'
+import Highlight from './highlight'
 window.onload = function()
 {
-    forkMe('https://github.com/davidfig/fork-me-github/')
-    forkMe('https://github.com/davidfig/fork-me-github', { background: 'green', side: 'topleft' })
+    forkMe()
+    forkMe(null, { background: 'green', side: 'topleft' })
     forkMe('https://github.com/davidfig/fork-me-github',
         {
             background: 'black',
@@ -12,6 +12,5 @@ window.onload = function()
             text: 'view on github'
         }
     )
-
-    require('./highlight')()
+    Highlight()
 }

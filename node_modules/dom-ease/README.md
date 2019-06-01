@@ -14,6 +14,7 @@ Here's a list of supported animations:
 * backgroundColor - one or more background colors to cycle through, including the current color
 * width / height in px
 * opacity
+* marginLeft, marginRight, marginTop, marginBottom in px
 * open a github issue if you want other parameters animated
 
 ## Installation

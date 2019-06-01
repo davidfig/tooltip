@@ -27,7 +27,7 @@ https://davidfig.github.io/tooltip/
 ```js
     /**
      * Add tooltip to an element
-     * @param {HTMLElement} element
+     * @param {(HTMLElement|string)} element or querySelector() input
      * @param {string} html
      * @param {object} [options]
      * @param {object} [options.styles] additional styles to apply to tooltip (e.g., backgroundColor: 'red')

@@ -1,46 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const forkMe = require('..')
+'use strict';
 
-window.onload = function()
-{
-    forkMe('https://github.com/davidfig/fork-me-github/')
-    forkMe('https://github.com/davidfig/fork-me-github', { background: 'green', side: 'topleft' })
-    forkMe('https://github.com/davidfig/fork-me-github',
-        {
-            background: 'black',
-            color: 'yellow',
-            side: 'bottomleft',
-            text: 'view on github'
-        }
-    )
-
-    require('./highlight')()
-}
-},{"..":3,"./highlight":2}],2:[function(require,module,exports){
-// shows the code in the demo
-module.exports = function highlight()
-{
-    var client = new XMLHttpRequest();
-    client.open('GET', 'code.js');
-    client.onreadystatechange = function()
-    {
-        var code = document.getElementById('code');
-        code.innerHTML = client.responseText;
-        require('highlight.js').highlightBlock(code);
-    };
-    client.send();
-};
-
-// for eslint
-/* globals window, XMLHttpRequest, document */
-},{"highlight.js":5}],3:[function(require,module,exports){
 // Programatically add fork me on github ribbon from javascript without making changes to CSS, HTML, or adding image files
 // by David Figatner
-// copyright 2017 YOPEY YOPEY LLC
+// copyright 2018 YOPEY YOPEY LLC
 // MIT license
 // based on https://github.com/simonwhitaker/github-fork-ribbon-css (MIT license)
 
-const RIBBON = {
+var RIBBON = {
     width: '12.1em',
     height: '12.1em',
     overflow: 'hidden',
@@ -51,60 +18,18 @@ const RIBBON = {
     fontSize: '13px',
     textDecoration: 'none',
     textIndent: '-999999px'
-}
+};
 
-const BEFORE_AFTER = [
-    ['position', 'absolute'],
-    ['display', 'block'],
-    ['width', '15.38em'],
-    ['height', '1.54em'],
-    ['top', '3.23em'],
-    ['right', '-3.23em'],
-    ['-webkit-box-sizing', 'content-box'],
-    ['-moz-box-sizing', 'content-box'],
-    ['box-sizing', 'content-box'],
-    ['-webkit-transform', 'rotate(45deg)'],
-    ['-moz-transform', 'rotate(45deg)'],
-    ['-ms-Transform', 'rotate(45deg)'],
-    ['-o-transform', 'rotate(45deg)'],
-    ['transform', 'rotate(45deg)']
-]
+var BEFORE_AFTER = [['position', 'absolute'], ['display', 'block'], ['width', '15.38em'], ['height', '1.54em'], ['top', '3.23em'], ['right', '-3.23em'], ['-webkit-box-sizing', 'content-box'], ['-moz-box-sizing', 'content-box'], ['box-sizing', 'content-box'], ['-webkit-transform', 'rotate(45deg)'], ['-moz-transform', 'rotate(45deg)'], ['-ms-Transform', 'rotate(45deg)'], ['-o-transform', 'rotate(45deg)'], ['transform', 'rotate(45deg)']];
 
-const BEFORE = [
-    ['content', '""'],
-    ['padding', '.38em 0'],
-    ['background-color', '#a00'],
-    ['background-image', '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)))'],
-    ['background-image', '-webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'],
-    ['background-image', '-moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'],
-    ['background-image', '-ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'],
-    ['background-image', '-o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'],
-    ['background-image', 'linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'],
-    ['box-shadow', '0 .15em .23em 0 rgba(0, 0, 0, 0.5)'],
-    ['pointer-events', 'auto']
-]
+var BEFORE = [['content', '""'], ['padding', '.38em 0'], ['background-color', '#a00'], ['background-image', '-webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 0.15)))'], ['background-image', '-webkit-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'], ['background-image', '-moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'], ['background-image', '-ms-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'], ['background-image', '-o-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'], ['background-image', 'linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15))'], ['box-shadow', '0 .15em .23em 0 rgba(0, 0, 0, 0.5)'], ['pointer-events', 'auto']];
 
-const AFTER = [
-    ['content', 'attr(data-ribbon)'],
-    ['color', '#fff'],
-    ['font', '700 1em "Helvetica Neue", Helvetica, Arial, sans-serif'],
-    ['line-height', '1.54em'],
-    ['text-decoration', 'none'],
-    ['text-shadow', '0 -.08em rgba(0, 0, 0, 0.5)'],
-    ['text-align', 'center'],
-    ['text-indent', '0'],
-    ['padding', '.15em 0'],
-    ['margin', '.15em 0'],
-    ['border-width', '.08em 0'],
-    ['border-style', 'dotted'],
-    ['border-color', '#fff'],
-    ['border-color', 'rgba(255, 255, 255, 0.7)']
-]
+var AFTER = [['content', 'attr(data-ribbon)'], ['color', '#fff'], ['font', '700 1em "Helvetica Neue", Helvetica, Arial, sans-serif'], ['line-height', '1.54em'], ['text-decoration', 'none'], ['text-shadow', '0 -.08em rgba(0, 0, 0, 0.5)'], ['text-align', 'center'], ['text-indent', '0'], ['padding', '.15em 0'], ['margin', '.15em 0'], ['border-width', '.08em 0'], ['border-style', 'dotted'], ['border-color', '#fff'], ['border-color', 'rgba(255, 255, 255, 0.7)']];
 
 /**
  * Programmatically add "Fork me Github" Ribbon using inline CSS
  * Based on CSS from https,//github.com/simonwhitaker/github-fork-ribbon-css
- * @param {string} url - html link
+ * @param {string} [url] - do not need to include if URL is called from https://username.github.io/project/html
  * @param {object} [options]
  * @param {HTMLElement} [options.parent=document.body]
  * @param {boolean} [options.fixed]
@@ -112,82 +37,186 @@ const AFTER = [
  * @param {string} [options.text=fork me on github] text to show
  * @param {string} [options.background=#a00] color for ribbon
  */
-module.exports = function forkMe(url, options)
-{
-    options = options || {}
-    const a = document.createElement('a')
-    a.href = url
-    a.title = a.innerText = options.text || 'fork me on github'
-    a.setAttribute('data-ribbon', options.text || 'fork me on github')
-    a.className = 'github-fork-ribbon-' + Math.round(Math.random() * 100000)
-    if (options.parent)
-    {
-        options.parent.appendChild(a)
+module.exports = function forkMe(url, options) {
+    options = options || {};
+    var a = document.createElement('a');
+    if (url) {
+        a.href = url;
+    } else {
+        var username = window.location.hostname.split('.')[0];
+        var project = window.location.pathname.split('/')[1];
+        a.href = 'https://github.com/' + username + '/' + project;
     }
-    else
-    {
-        document.body.appendChild(a)
+
+    a.title = a.innerText = options.text || 'fork me on github';
+    a.setAttribute('data-ribbon', options.text || 'fork me on github');
+    a.className = 'github-fork-ribbon-' + Math.round(Math.random() * 100000);
+    if (options.parent) {
+        options.parent.appendChild(a);
+    } else {
+        document.body.appendChild(a);
     }
-    a.style.position = options.fixed ? 'fixed' : 'absolute'
-    if (options.background)
-    {
-        BEFORE[2][1] = options.background
+    a.style.position = options.fixed ? 'fixed' : 'absolute';
+    if (options.background) {
+        BEFORE[2][1] = options.background;
     }
-    if (options.color)
-    {
-        AFTER[1][1] = options.color
+    if (options.color) {
+        AFTER[1][1] = options.color;
     }
-    for (let style in RIBBON)
-    {
-        a.style[style] = RIBBON[style]
+    for (var _style in RIBBON) {
+        a.style[_style] = RIBBON[_style];
     }
-    let beforeAfter = '{'
-    for (let style of BEFORE_AFTER)
-    {
-        beforeAfter += style[0] + ':' + style[1] + ';'
+    var beforeAfter = '{';
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+        for (var _iterator = BEFORE_AFTER[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var _style2 = _step.value;
+
+            beforeAfter += _style2[0] + ':' + _style2[1] + ';';
+        }
+    } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+            }
+        } finally {
+            if (_didIteratorError) {
+                throw _iteratorError;
+            }
+        }
     }
-    let before = beforeAfter
-    for (let style of BEFORE)
-    {
-        before += style[0] + ':' + style[1] + ';'
+
+    var before = beforeAfter;
+    var _iteratorNormalCompletion2 = true;
+    var _didIteratorError2 = false;
+    var _iteratorError2 = undefined;
+
+    try {
+        for (var _iterator2 = BEFORE[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+            var _style3 = _step2.value;
+
+            before += _style3[0] + ':' + _style3[1] + ';';
+        }
+    } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                _iterator2.return();
+            }
+        } finally {
+            if (_didIteratorError2) {
+                throw _iteratorError2;
+            }
+        }
     }
-    let after = beforeAfter
-    for (let style of AFTER)
-    {
-        after += style[0] + ':' + style[1] + ';'
+
+    var after = beforeAfter;
+    var _iteratorNormalCompletion3 = true;
+    var _didIteratorError3 = false;
+    var _iteratorError3 = undefined;
+
+    try {
+        for (var _iterator3 = AFTER[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var _style4 = _step3.value;
+
+            after += _style4[0] + ':' + _style4[1] + ';';
+        }
+    } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+    } finally {
+        try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                _iterator3.return();
+            }
+        } finally {
+            if (_didIteratorError3) {
+                throw _iteratorError3;
+            }
+        }
     }
-    let bottom, left
-    if (options.side)
-    {
-        bottom = options.side.toLowerCase().indexOf('bottom') !== -1
-        left = options.side.toLowerCase().indexOf('left') !== -1
+
+    var bottom = void 0,
+        left = void 0;
+    if (options.side) {
+        bottom = options.side.toLowerCase().indexOf('bottom') !== -1;
+        left = options.side.toLowerCase().indexOf('left') !== -1;
     }
-    if (bottom)
-    {
-        a.style.top = 'auto'
-        a.style.bottom = 0
-        before += 'top:auto;bottom:3.23em;'
-        after += 'top:auto;bottom:3.23em;'
+    if (bottom) {
+        a.style.top = 'auto';
+        a.style.bottom = 0;
+        before += 'top:auto;bottom:3.23em;';
+        after += 'top:auto;bottom:3.23em;';
     }
-    if (left)
-    {
-        a.style.right = 'auto'
-        a.style.left = 0
-        before += 'right:auto;left:-3.23em;'
-        after += 'right:auto;left:-3.23em;'
+    if (left) {
+        a.style.right = 'auto';
+        a.style.left = 0;
+        before += 'right:auto;left:-3.23em;';
+        after += 'right:auto;left:-3.23em;';
     }
-    if ((left && !bottom) || (!left && bottom))
-    {
-        before += 'transform:rotate(-45deg);'
-        after += 'transform:rotate(-45deg);'
+    if (left && !bottom || !left && bottom) {
+        before += 'transform:rotate(-45deg);';
+        after += 'transform:rotate(-45deg);';
     }
-    const style = document.createElement('style')
-    document.head.appendChild(style)
-    const sheet = style.sheet
-    sheet.insertRule('.' + a.className + '::before' + before + '}')
-    sheet.insertRule('.' + a.className + '::after' + after + '}')
-}
-},{}],4:[function(require,module,exports){
+    var style = document.createElement('style');
+    document.head.appendChild(style);
+    var sheet = style.sheet;
+    sheet.insertRule('.' + a.className + '::before' + before + '}');
+    sheet.insertRule('.' + a.className + '::after' + after + '}');
+};
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+var _dist = require('../dist/');
+
+var _dist2 = _interopRequireDefault(_dist);
+
+var _highlight = require('./highlight');
+
+var _highlight2 = _interopRequireDefault(_highlight);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+window.onload = function () {
+    (0, _dist2.default)();
+    (0, _dist2.default)(null, { background: 'green', side: 'topleft' });
+    (0, _dist2.default)('https://github.com/davidfig/fork-me-github', {
+        background: 'black',
+        color: 'yellow',
+        side: 'bottomleft',
+        text: 'view on github'
+    });
+    (0, _highlight2.default)();
+};
+
+},{"../dist/":1,"./highlight":3}],3:[function(require,module,exports){
+'use strict';
+
+// shows the code in the demo
+module.exports = function highlight() {
+    var client = new XMLHttpRequest();
+    client.open('GET', 'code.js');
+    client.onreadystatechange = function () {
+        var code = document.getElementById('code');
+        code.innerHTML = client.responseText;
+        require('highlight.js').highlightBlock(code);
+    };
+    client.send();
+};
+
+// for eslint
+/* globals window, XMLHttpRequest, document */
+
+},{"highlight.js":5}],4:[function(require,module,exports){
 /*
 Syntax highlighting with language autodetection.
 https://highlightjs.org/
@@ -17019,4 +17048,4 @@ module.exports = function(hljs) {
     ]
   };
 };
-},{}]},{},[1]);
+},{}]},{},[2]);

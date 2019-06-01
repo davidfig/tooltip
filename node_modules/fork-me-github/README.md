@@ -17,20 +17,6 @@ https://davidfig.github.io/fork-me-github/
     npm i fork-me-github
 
 ## API Reference
-```
-/**
- * Programmatically add "Fork me Github" Ribbon using inline CSS
- * Based on CSS from https,//github.com/simonwhitaker/github-fork-ribbon-css
- * @param {string} url - html link
- * @param {object} [options]
- * @param {HTMLElement} [options.parent=document.body]
- * @param {boolean} [options.fixed]
- * @param {string} [options.corner=topright] some combination of top/bottom, and left/right
- * @param {string} [options.text=fork me on github] text to show
- * @param {string} [options.background=#a00] color for ribbon
- */
-module.exports = function forkMe(url, options)
-```
 ## Inspiration
 
 Ribbon uses [Simon Whitaker's github-fork-ribbon-css](https://github.com/simonwhitaker/github-fork-ribbon-css), which is based on [Github's ribbon examples](https://github.com/blog/273-github-ribbons)

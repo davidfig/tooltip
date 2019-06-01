@@ -4,7 +4,7 @@ class Tooltip
 {
     /**
      * Add tooltip to an element
-     * @param {HTMLElement} element
+     * @param {(HTMLElement|string)} element or querySelector() input
      * @param {string} html
      * @param {object} [options]
      * @param {object} [options.styles] additional styles to apply to tooltip (e.g., backgroundColor: 'red')
@@ -13,6 +13,16 @@ class Tooltip
     constructor(element, html, options)
     {
         options = options || {}
+        if (typeof element === 'string')
+        {
+            const change = document.querySelector(element)
+            if (!change)
+            {
+                console.warn(`No element found for Tooltip using querySelector("${element}")`)
+                return
+            }
+            element = change
+        }
 
         const styles = {}
         for (let style in Tooltip.styles)

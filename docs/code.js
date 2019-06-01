@@ -7,6 +7,10 @@ function test()
         const button = document.getElementById('button' + i)
         switch (i)
         {
+            case 2:
+                new Tooltip('#button2', '<div>Tooltip using querySelector()</div>')
+                break
+
             case 3:
                 new Tooltip(button, '<div>This one is formatted differently.</div><div>Nice, right?</div>',
                     {
