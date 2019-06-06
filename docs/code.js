@@ -12,15 +12,15 @@ function test()
                 break
 
             case 3:
-                new Tooltip(button, '<div>This one is formatted differently.</div><div>Nice, right?</div>',
+                new Tooltip(button, '<div>This one is formatted differently and uses location: center.</div><div>Nice, right?</div>',
                     {
-                        styles:
-                            {
-                                backgroundColor: 'black',
-                                color: 'white',
-                                boxShadow: '2px 3px 3px rgba(0,0,0,0.25)',
-                                borderRadius: '0.25em'
-                            }
+                        styles: {
+                            backgroundColor: 'black',
+                            color: 'white',
+                            boxShadow: '2px 3px 3px rgba(0,0,0,0.25)',
+                            borderRadius: '0.25em'
+                        },
+                        location: 'center'
                     })
                 break
 

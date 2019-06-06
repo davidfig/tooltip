@@ -7,12 +7,16 @@ class Tooltip
      * @param {(HTMLElement|string)} element or querySelector() input
      * @param {string} html
      * @param {object} [options]
+     * @param {TooltipLocation} [options.location] unset: corner at cursor; otherwise a combination of "top/center/bottom + left/center/right", e.g., 'top-center', 'center+right', 'rightbottom', center'
      * @param {object} [options.styles] additional styles to apply to tooltip (e.g., backgroundColor: 'red')
-     * @param {number} [options.parent] parent to attach tooltip div
+     * @param {boolean} [options.className] use class name instead of styles for tooltip box (ignores options.styles)
+     * @param {HTMLElement} [options.parent=document.body] parent to attach tooltip div
+     * @param {number} [options.duration=250] fade-in/out in milliseconds
+     * @param {number} [options.wait=500] milliseconds to wait before showing tooltip
+     * @param {(string|Function)} [options.ease=easeInOutSine] name of ease (@see https://github.com/bcherny/penner#readme for names)
      */
-    constructor(element, html, options)
+    constructor(element, html, options = {})
     {
-        options = options || {}
         if (typeof element === 'string')
         {
             const change = document.querySelector(element)
@@ -41,16 +45,56 @@ class Tooltip
 
         this.parent = options.parent || Tooltip.parent || document.body
         this.div = document.createElement('div')
-        for (let style in styles)
+        if (options.className)
         {
-            this.div.style[style] = styles[style]
+            this.div.className = options.className
+
+        }
+        else
+        {
+            for (let style in styles)
+            {
+                this.div.style[style] = styles[style]
+            }
         }
         this.div.innerHTML = html
+        this.options = options
+        this.element = element
+        this.setupLocation()
 
         element.addEventListener('mouseenter', (e) => this.mouseenter(e))
         element.addEventListener('mousemove', (e) => this.mousemove(e))
         element.addEventListener('mousedown', (e) => this.mouseleave(e))
         element.addEventListener('mouseleave', (e) => this.mouseleave(e))
+    }
+
+    setupLocation()
+    {
+        const location = this.options.location
+        if (location)
+        {
+            this.horizontal = this.vertical = 'center'
+            if (location.indexOf('left') !== -1)
+            {
+                this.horizontal = 'left'
+            }
+            else if (location.indexOf('right') !== -1)
+            {
+                this.horizontal = 'right'
+            }
+            if (location.indexOf('top') !== -1)
+            {
+                this.vertical = 'top'
+            }
+            else if(location.indexOf('bottom') !== -1)
+            {
+                this.vertical = 'bottom'
+            }
+        }
+        else
+        {
+            this.location = 'cursor'
+        }
     }
 
     /** removes tooltip */
@@ -75,7 +119,8 @@ class Tooltip
 
     /**
      * @type {number}
-     * get/set fade in/out duration in milliseconds
+     * get/set default fade in/out duration in milliseconds
+     * defaults to 250
      */
     static get animationDuration()
     {
@@ -88,8 +133,22 @@ class Tooltip
 
     /**
      * @type {(string|function)}
-     * get/set ease function (or function name) to use for tooltip fade
+     * get/set default ease function (or function name) to use for tooltip fade
      * defaults to 'easeInOutSine'
+     */
+    static get animationEase()
+    {
+        return Tooltip.ease.options.ease
+    }
+    static set animationEase(value)
+    {
+        Tooltip.ease.options.ease = value
+    }
+
+    /**
+     * @type {number}
+     * get/set default wait time for fade in/out duration in milliseconds
+     * defaults to 500
      */
     static get animationEase()
     {
@@ -102,9 +161,24 @@ class Tooltip
 
     position(e)
     {
+        let x, y
+        if (this.location === 'cursor')
+        {
+            x = e.pageX
+            y = e.pageY
+        }
+        else
+        {
+            x = this.horizontal === 'left' ? this.element.offsetLeft :
+                this.horizontal === 'right' ? this.element.offsetLeft + this.element.offsetWidth :
+                    this.element.offsetLeft + this.element.offsetWidth / 2
+            y = this.vertical === 'top' ? this.element.offsetTop :
+                this.vertical === 'bottom' ? this.element.offsetTop + this.element.offsetHeight :
+                    this.element.offsetTop + this.element.offsetHeight / 2
+        }
         this.div.maxWidth = 'none'
-        this.div.style.left = e.pageX - (e.pageX > window.innerWidth / 2 ? this.div.offsetWidth : 0) + 'px'
-        this.div.style.top = e.pageY - (e.pageY > window.innerHeight / 2 ? this.div.offsetHeight : 0) + 'px'
+        this.div.style.left = x - (x > window.innerWidth / 2 ? this.div.offsetWidth : 0) + 'px'
+        this.div.style.top = y - (y > window.innerHeight / 2 ? this.div.offsetHeight : 0) + 'px'
         if (this.div.offsetLeft < 0)
         {
             const width = this.div.offsetWidth
@@ -128,7 +202,7 @@ class Tooltip
                 this.div.style.display = this.display
                 this.parent.appendChild(this.div)
                 Tooltip.ease.remove(this.easing)
-                this.easing = Tooltip.ease.add(this.div, { opacity: 1 }, { wait: Tooltip.wait })
+                this.easing = Tooltip.ease.add(this.div, { opacity: 1 }, { ease: this.options.ease, wait: this.options.wait, duration: this.options.duration })
                 this.position(e)
                 this.showing = true
             }
@@ -171,14 +245,7 @@ Tooltip.styles = {
     'pointerEvents': 'none'
 }
 
-Tooltip.ease = new Ease({ duration: 250, ease: 'easeInOutSine' })
-
-/**
- * @type {number}
- * @static
- * milliseconds to wait before showing tooltip
- */
-Tooltip.wait = 500
+Tooltip.ease = new Ease({ duration: 250, ease: 'easeInOutSine', wait: 500 })
 
 /**
  * @type {HTMLElement}

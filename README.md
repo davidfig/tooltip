@@ -30,10 +30,15 @@ https://davidfig.github.io/tooltip/
      * @param {(HTMLElement|string)} element or querySelector() input
      * @param {string} html
      * @param {object} [options]
+     * @param {TooltipLocation} [options.location] unset: corner at cursor; otherwise a combination of "top/center/bottom + left/center/right", e.g., 'top-center', 'center+right', 'rightbottom', center'
      * @param {object} [options.styles] additional styles to apply to tooltip (e.g., backgroundColor: 'red')
-     * @param {number} [options.parent] parent to attach tooltip div
+     * @param {boolean} [options.className] use class name instead of styles for tooltip box (ignores options.styles)
+     * @param {HTMLElement} [options.parent=document.body] parent to attach tooltip div
+     * @param {number} [options.duration=250] fade-in/out in milliseconds
+     * @param {number} [options.wait=500] milliseconds to wait before showing tooltip
+     * @param {(string|Function)} [options.ease=easeInOutSine] name of ease (@see https://github.com/bcherny/penner#readme for names)
      */
-    constructor(element, html, options)
+    constructor(element, html, options = {})
 
     /** removes tooltip */
     remove()
@@ -50,14 +55,22 @@ https://davidfig.github.io/tooltip/
 
     /**
      * @type {number}
-     * get/set fade in/out duration in milliseconds
+     * get/set default fade in/out duration in milliseconds
+     * defaults to 250
      */
     static get animationDuration()
 
     /**
      * @type {(string|function)}
-     * get/set ease function (or function name) to use for tooltip fade
+     * get/set default ease function (or function name) to use for tooltip fade
      * defaults to 'easeInOutSine'
+     */
+    static get animationEase()
+
+    /**
+     * @type {number}
+     * get/set default wait time for fade in/out duration in milliseconds
+     * defaults to 500
      */
     static get animationEase()
 
@@ -66,13 +79,6 @@ https://davidfig.github.io/tooltip/
  * default styles to apply to tooltip div
  */
 Tooltip.styles = {
-
-/**
- * @type {number}
- * @static
- * milliseconds to wait before showing tooltip
- */
-Tooltip.wait = 500
 
 /**
  * @type {HTMLElement}
