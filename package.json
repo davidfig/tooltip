@@ -4,16 +4,17 @@
   "description": "Yet another vanilla javascript tooltip library",
   "main": "index.js",
   "scripts": {
-    "test": "budo --dir docs docs/code.js:index.js --live",
-    "build": "browserify docs/code.js -o docs/index.js",
+    "test": "esbuild docs/code.js --bundle --outfile=docs/index.js --servedir=docs --watch",
+    "build": "esbuild docs/code.js --bundle --minify --outfile=docs/index.js",
     "docs": "markdown-api README.md index.js",
     "prepublishOnly": "npm run build && npm run docs"
   },
   "author": "David Figatner",
   "license": "MIT",
   "devDependencies": {
-    "fork-me-github": "^1.0.3",
-    "highlight.js": "^9.12.0"
+    "esbuild": "^0.28.2",
+    "fork-me-github": "^1.2.0",
+    "highlight.js": "^11.12.0"
   },
   "dependencies": {
     "dom-ease": "^0.9.3"
