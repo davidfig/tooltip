@@ -3,6 +3,9 @@
   "version": "1.5.3",
   "description": "Yet another vanilla javascript tooltip library",
   "main": "index.js",
+  "files": [
+    "index.js"
+  ],
   "scripts": {
     "test": "esbuild docs/code.js --bundle --outfile=docs/index.js --servedir=docs --watch",
     "build": "esbuild docs/code.js --bundle --minify --outfile=docs/index.js",
