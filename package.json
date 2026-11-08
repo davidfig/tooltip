@@ -9,7 +9,7 @@
   "scripts": {
     "test": "esbuild docs/code.js --bundle --outfile=docs/index.js --servedir=docs --watch",
     "build": "esbuild docs/code.js --bundle --minify --outfile=docs/index.js",
-    "docs": "markdown-api README.md index.js",
+    "docs": "node node_modules/markdown-api/markdown-api.js README.md index.js",
     "prepublishOnly": "npm run build && npm run docs"
   },
   "author": "David Figatner",
@@ -17,7 +17,8 @@
   "devDependencies": {
     "esbuild": "^0.28.2",
     "fork-me-github": "^1.2.0",
-    "highlight.js": "^11.12.0"
+    "highlight.js": "^11.12.0",
+    "markdown-api": "^1.1.3"
   },
   "dependencies": {
     "dom-ease": "^0.9.3"
