@@ -12,7 +12,7 @@ class Tooltip
      * @param {boolean} [options.className] use class name instead of styles for tooltip box (ignores options.styles)
      * @param {HTMLElement} [options.parent=document.body] parent to attach tooltip div
      * @param {number} [options.duration=250] fade-in/out in milliseconds
-     * @param {number} [options.wait=500] milliseconds to wait before showing tooltip
+     * @param {number} [options.wait=Tooltip.animationWait] milliseconds to wait before showing tooltip (defaults to 0)
      * @param {(string|Function)} [options.ease=easeInOutSine] name of ease (@see https://github.com/bcherny/penner#readme for names)
      */
     constructor(element, html, options = {})
@@ -66,6 +66,7 @@ class Tooltip
         element.addEventListener('mousemove', (e) => this.mousemove(e))
         element.addEventListener('mousedown', (e) => this.mouseleave(e))
         element.addEventListener('mouseleave', (e) => this.mouseleave(e))
+        window.addEventListener('mousedown', () => this.mouseleave())
     }
 
     setupLocation()
@@ -147,16 +148,16 @@ class Tooltip
 
     /**
      * @type {number}
-     * get/set default wait time for fade in/out duration in milliseconds
-     * defaults to 500
+     * get/set default wait in milliseconds before a tooltip fades in (used when a tooltip has no options.wait)
+     * defaults to 0
      */
-    static get animationEase()
+    static get animationWait()
     {
-        return Tooltip.ease.options.ease
+        return Tooltip.ease.options.wait
     }
-    static set animationEase(value)
+    static set animationWait(value)
     {
-        Tooltip.ease.options.ease = value
+        Tooltip.ease.options.wait = value
     }
 
     position(e)
@@ -202,7 +203,7 @@ class Tooltip
                 this.div.style.display = this.display
                 this.parent.appendChild(this.div)
                 Tooltip.ease.remove(this.easing)
-                this.easing = Tooltip.ease.add(this.div, { opacity: 1 }, { ease: this.options.ease, wait: this.options.wait, duration: this.options.duration })
+                this.easing = Tooltip.ease.add(this.div, { opacity: 1 }, { ease: this.options.ease, wait: typeof this.options.wait === 'number' ? this.options.wait : Tooltip.ease.options.wait, duration: this.options.duration })
                 this.position(e)
                 this.showing = true
             }
@@ -245,7 +246,7 @@ Tooltip.styles = {
     'pointerEvents': 'none'
 }
 
-Tooltip.ease = new Ease({ duration: 250, ease: 'easeInOutSine', wait: 500 })
+Tooltip.ease = new Ease({ duration: 250, ease: 'easeInOutSine', wait: 0 })
 
 /**
  * @type {HTMLElement}

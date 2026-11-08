@@ -35,7 +35,7 @@ https://davidfig.github.io/tooltip/
      * @param {boolean} [options.className] use class name instead of styles for tooltip box (ignores options.styles)
      * @param {HTMLElement} [options.parent=document.body] parent to attach tooltip div
      * @param {number} [options.duration=250] fade-in/out in milliseconds
-     * @param {number} [options.wait=500] milliseconds to wait before showing tooltip
+     * @param {number} [options.wait=Tooltip.animationWait] milliseconds to wait before showing tooltip (defaults to 0)
      * @param {(string|Function)} [options.ease=easeInOutSine] name of ease (@see https://github.com/bcherny/penner#readme for names)
      */
     constructor(element, html, options = {})
@@ -69,10 +69,10 @@ https://davidfig.github.io/tooltip/
 
     /**
      * @type {number}
-     * get/set default wait time for fade in/out duration in milliseconds
-     * defaults to 500
+     * get/set default wait in milliseconds before a tooltip fades in (used when a tooltip has no options.wait)
+     * defaults to 0
      */
-    static get animationEase()
+    static get animationWait()
 
 /**
  * @type {object}
